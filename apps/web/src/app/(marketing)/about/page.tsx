@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import PhotoModal from "./photoModal";
  
 export const metadata: Metadata = {
   title: 'About Us',
@@ -11,14 +12,24 @@ async function getAboutData() {
 }
 
  
-export default async function AboutPage() {
+type AboutPageProps = {
+    searchParams?: Promise<{
+        photo?: string
+    }>
+}
+
+export default async function AboutPage({ searchParams }: AboutPageProps) {
     // Fetch about page data (simulates a 2-second delay)
+    const resolvedSearchParams = await searchParams
     const data = await getAboutData()
+    const isPhotoOpen = resolvedSearchParams?.photo === 'open'
 
     return (
         <div className="max-w-2xl">
             {/* Page heading */}
             <h1 className="mb-4 font-bold text-3xl">About Us</h1>
+
+            <PhotoModal src="/images/profile.jpg" alt="Profile photo" isOpen={isPhotoOpen} />
 
             {/* Description of the marketing layout */}
             <p className="mb-4 text-gray-600">
