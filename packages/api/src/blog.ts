@@ -153,9 +153,9 @@ export async function fetchPostBySlug(slug: string): Promise<BlogPost | null> {
   const allPosts = getAllPosts();
   const post = allPosts.find((p) => p.slug === slug);
 
-  // If not found, generate a new post with the given slug
+  // If not found, return null
   if (!post) {
-    return generateBlogPost({ slug });
+    return null;
   }
 
   return post;
